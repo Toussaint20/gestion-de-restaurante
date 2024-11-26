@@ -81,7 +81,7 @@ DATABASES = {
         'NAME':'restaurante',
         'USER': 'Admin',
         'PASSWORD': 'admin2024',
-        'HOST': 'prime-formula-442421-r3:southamerica-west1:gestionrestaurante-2024',
+        'HOST': '34.176.160.92',
         'PORT': '3306',
     }
 }
