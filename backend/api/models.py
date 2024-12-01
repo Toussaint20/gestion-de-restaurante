@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save, pre_delete
+from django.dispatch import receiver
 
 # Tabla Mesas
 class Mesa(models.Model):
@@ -47,7 +49,7 @@ class Pedido(models.Model):
     ]
     mesa = models.ForeignKey(Mesa, on_delete=models.CASCADE)
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
-    fecha = models.DateTimeField()
+    fecha = models.DateTimeField(auto_now_add=True)
     total = models.DecimalField(max_digits=10, decimal_places=2)
     estado = models.CharField(max_length=10, choices=ESTADOS, default='pendiente')
 
@@ -97,3 +99,29 @@ class Usuario(models.Model):
 
     def __str__(self):
         return self.nombre_usuario
+
+# Señales para actualizar estado de la mesa y descontar inventario
+@receiver(post_save, sender=Pedido)
+def actualizar_estado_mesa(sender, instance, **kwargs):
+    if instance.estado == 'pendiente':
+        mesa = instance.mesa
+        mesa.estado = 'ocupada'
+        mesa.save()
+
+@receiver(pre_delete, sender=Pedido)
+def liberar_mesa(sender, instance, **kwargs):
+    mesa = instance.mesa
+    if not Pedido.objects.filter(mesa=mesa, estado='pendiente').exists():
+        mesa.estado = 'disponible'
+        mesa.save()
+
+@receiver(post_save, sender=DetallePedido)
+def descontar_inventario(sender, instance, **kwargs):
+    ingredientes = Inventario.objects.filter(nombre_producto=instance.menu.nombre_plato)
+    if ingredientes.exists():
+        ingrediente = ingredientes.first()
+        if ingrediente.cantidad >= instance.cantidad:
+            ingrediente.cantidad -= instance.cantidad
+            ingrediente.save()
+        else:
+            raise ValueError("Stock insuficiente para el pedido.")
