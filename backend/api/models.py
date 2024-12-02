@@ -84,6 +84,7 @@ class Inventario(models.Model):
     def __str__(self):
         return self.nombre_producto
 
+
 # Tabla Usuarios
 class Usuario(models.Model):
     TIPO_USUARIO = [
@@ -99,6 +100,21 @@ class Usuario(models.Model):
 
     def __str__(self):
         return self.nombre_usuario
+    
+#tabla para relacionar menú con inventario en relación onetomany 
+class IngredienteMenu(models.Model):
+    menu = models.ForeignKey('Menu', on_delete=models.CASCADE, related_name='ingredientes')
+    ingrediente = models.ForeignKey(Inventario, on_delete=models.CASCADE, related_name='menus')
+    cantidad_requerida = models.DecimalField(max_digits=10, decimal_places=2)  # Cantidad requerida del ingrediente
+    unidad_medida = models.CharField(
+        max_length=10,
+        choices=Inventario.UNIDAD_MEDIDA,  # Usa las mismas unidades de `Inventario`
+        default='unidad'
+    )
+
+    def __str__(self):
+        return f"{self.cantidad_requerida} {self.unidad_medida} de {self.ingrediente.nombre_producto} para {self.menu.nombre_plato}"
+
 
 # Señales para actualizar estado de la mesa y descontar inventario
 @receiver(post_save, sender=Pedido)
@@ -108,20 +124,20 @@ def actualizar_estado_mesa(sender, instance, **kwargs):
         mesa.estado = 'ocupada'
         mesa.save()
 
-@receiver(pre_delete, sender=Pedido)
-def liberar_mesa(sender, instance, **kwargs):
-    mesa = instance.mesa
-    if not Pedido.objects.filter(mesa=mesa, estado='pendiente').exists():
-        mesa.estado = 'disponible'
-        mesa.save()
+# @receiver(pre_delete, sender=Pedido)
+# def liberar_mesa(sender, instance, **kwargs):
+#     mesa = instance.mesa
+#     if not Pedido.objects.filter(mesa=mesa, estado='pendiente').exists():
+#         mesa.estado = 'disponible'
+#         mesa.save()
 
-@receiver(post_save, sender=DetallePedido)
-def descontar_inventario(sender, instance, **kwargs):
-    ingredientes = Inventario.objects.filter(nombre_producto=instance.menu.nombre_plato)
-    if ingredientes.exists():
-        ingrediente = ingredientes.first()
-        if ingrediente.cantidad >= instance.cantidad:
-            ingrediente.cantidad -= instance.cantidad
-            ingrediente.save()
-        else:
-            raise ValueError("Stock insuficiente para el pedido.")
+# @receiver(post_save, sender=DetallePedido)
+# def descontar_inventario(sender, instance, **kwargs):
+#     ingredientes = Inventario.objects.filter(nombre_producto=instance.menu.nombre_plato)
+#     if ingredientes.exists():
+#         ingrediente = ingredientes.first()
+#         if ingrediente.cantidad >= instance.cantidad:
+#             ingrediente.cantidad -= instance.cantidad
+#             ingrediente.save()
+#         else:
+#             raise ValueError("Stock insuficiente para el pedido.")

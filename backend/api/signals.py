@@ -15,3 +15,4 @@ def liberar_mesa(sender, instance, **kwargs):
     if not Pedido.objects.filter(mesa=mesa).exists():
         mesa.estado = 'disponible'
         mesa.save()
+
