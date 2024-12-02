@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Pedido, Mesa, Empleado, Inventario, DetallePedido, Usuario
+from .models import Pedido, Mesa, Empleado, Inventario, DetallePedido, Usuarios
 
 
 class PedidoSerializer(serializers.ModelSerializer):
@@ -29,5 +29,5 @@ class DetallePedidoSerializer(serializers.ModelSerializer):
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Usuario
+        model = Usuarios
         fields = ['id', 'nombre_usuario', 'tipo_usuario']

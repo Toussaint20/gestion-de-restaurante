@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import PedidoViewSet, MesaViewSet, EmpleadoViewSet, InventarioViewSet, DetallePedidoViewSet, UsuarioViewSet, MyTokenObtainPairView, MyTokenRefreshView, ActualizarEstadoMesaView
+from .views import PedidoViewSet, MesaViewSet, EmpleadoViewSet, InventarioViewSet, DetallePedidoViewSet, UsuariosViewSet, MyTokenObtainPairView, MyTokenRefreshView, ActualizarEstadoMesaView
 
 #routers
 router = DefaultRouter()
@@ -9,7 +9,7 @@ router.register(r'mesas', MesaViewSet)
 router.register(r'empleados', EmpleadoViewSet)
 router.register(r'inventario', InventarioViewSet)
 router.register(r'detalles_pedidos', DetallePedidoViewSet)
-router.register(r'usuarios', UsuarioViewSet)
+router.register(r'usuarios', UsuariosViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),  # Incluye las rutas creadas por el router

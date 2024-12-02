@@ -1,9 +1,11 @@
 from django.db import models
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
+import uuid
 
 # Tabla Mesas
 class Mesa(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     numero_mesa = models.IntegerField(unique=True)
     capacidad = models.IntegerField()
     estado = models.CharField(
@@ -17,6 +19,7 @@ class Mesa(models.Model):
 
 # Tabla Empleados
 class Empleado(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     CARGOS = [
         ('mesero', 'Mesero'),
         ('cocinero', 'Cocinero'),
@@ -33,6 +36,7 @@ class Empleado(models.Model):
 
 # Tabla Menú
 class Menu(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nombre_plato = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True, null=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
@@ -42,6 +46,7 @@ class Menu(models.Model):
 
 # Tabla Pedidos
 class Pedido(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     ESTADOS = [
         ('pendiente', 'Pendiente'),
         ('preparando', 'Preparando'),
@@ -58,7 +63,8 @@ class Pedido(models.Model):
 
 # Tabla Detalles de Pedidos
 class DetallePedido(models.Model):
-    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, to_field='id')
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     cantidad = models.IntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
@@ -68,6 +74,7 @@ class DetallePedido(models.Model):
 
 # Tabla Inventario
 class Inventario(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     UNIDAD_MEDIDA = [
         ('unidad', 'Unidad'),
         ('litro', 'Litro'),
@@ -84,9 +91,9 @@ class Inventario(models.Model):
     def __str__(self):
         return self.nombre_producto
 
-
 # Tabla Usuarios
-class Usuario(models.Model):
+class Usuarios(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     TIPO_USUARIO = [
         ('mesero', 'Mesero'),
         ('cocinero', 'Cocinero'),
@@ -103,9 +110,9 @@ class Usuario(models.Model):
     
 #tabla para relacionar menú con inventario en relación onetomany 
 class IngredienteMenu(models.Model):
-    menu = models.ForeignKey('Menu', on_delete=models.CASCADE, related_name='ingredientes')
-    ingrediente = models.ForeignKey(Inventario, on_delete=models.CASCADE, related_name='menus')
-    cantidad_requerida = models.DecimalField(max_digits=10, decimal_places=2)  # Cantidad requerida del ingrediente
+    menu = models.ForeignKey('Menu', on_delete=models.CASCADE, related_name='ingredientes', to_field='id')  
+    ingrediente = models.ForeignKey(Inventario, on_delete=models.CASCADE, related_name='menus', to_field='id')  
+    cantidad_requerida = models.DecimalField(max_digits=10, decimal_places=2)  
     unidad_medida = models.CharField(
         max_length=10,
         choices=Inventario.UNIDAD_MEDIDA,  # Usa las mismas unidades de `Inventario`

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
-from .models import Pedido, Mesa, Empleado, Inventario, DetallePedido, Usuario 
+from .models import Pedido, Mesa, Empleado, Inventario, DetallePedido, Usuarios 
 from .serializers import PedidoSerializer, MesaSerializer, EmpleadoSerializer, InventarioSerializer, DetallePedidoSerializer, UsuarioSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.views import APIView
@@ -27,8 +27,8 @@ class DetallePedidoViewSet(viewsets.ModelViewSet):
     queryset = DetallePedido.objects.all()
     serializer_class = DetallePedidoSerializer
 
-class UsuarioViewSet(viewsets.ModelViewSet):
-    queryset = Usuario.objects.all()
+class UsuariosViewSet(viewsets.ModelViewSet):
+    queryset = Usuarios.objects.all()
     serializer_class = UsuarioSerializer
 
 # Para obtener el token (login)
