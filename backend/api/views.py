@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
-from .models import Pedido, Mesa, Empleado, Inventario, DetallePedido, Usuarios 
-from .serializers import PedidoSerializer, MesaSerializer, EmpleadoSerializer, InventarioSerializer, DetallePedidoSerializer, UsuarioSerializer
+from .models import Pedido, Mesa, Empleado, Inventario, DetallePedido, Usuarios, Menu, IngredienteMenu 
+from .serializers import PedidoSerializer, MesaSerializer, EmpleadoSerializer, InventarioSerializer, DetallePedidoSerializer, UsuarioSerializer, MenuSerializer, IngredienteMenuSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -31,6 +31,14 @@ class UsuariosViewSet(viewsets.ModelViewSet):
     queryset = Usuarios.objects.all()
     serializer_class = UsuarioSerializer
 
+class MenuViewSet(viewsets.ModelViewSet):
+    queryset = Menu.objects.all()
+    serializer_class = MenuSerializer
+
+class IngredienteMenuViewSet(viewsets.ModelViewSet):
+    queryset = IngredienteMenu.objects.all()
+    serializer_class = IngredienteMenuSerializer
+    
 # Para obtener el token (login)
 class MyTokenObtainPairView(TokenObtainPairView):
     pass
@@ -52,3 +60,4 @@ class ActualizarEstadoMesaView(APIView):
             return Response(MesaSerializer(mesa).data, status=status.HTTP_200_OK)
         except Mesa.DoesNotExist:
             return Response({'error': 'Mesa no encontrada'}, status=status.HTTP_404_NOT_FOUND)
+

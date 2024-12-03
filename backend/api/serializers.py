@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Pedido, Mesa, Empleado, Inventario, DetallePedido, Usuarios
+from .models import Pedido, Mesa, Empleado, Inventario, DetallePedido, Usuarios, Menu, IngredienteMenu
 
 
 class PedidoSerializer(serializers.ModelSerializer):
@@ -31,3 +31,13 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuarios
         fields = ['id', 'nombre_usuario', 'tipo_usuario']
+
+class MenuSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Menu
+        fields = '__all__'
+
+class IngredienteMenuSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IngredienteMenu
+        fields = '__all__'
