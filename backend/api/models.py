@@ -10,7 +10,7 @@ class Mesa(models.Model):
     capacidad = models.IntegerField()
     estado = models.CharField(
         max_length=10,
-        choices=[('disponible', 'Disponible'), ('ocupada', 'Ocupada')],
+        choices=[('disponible', 'Disponible'), ('ocupada', 'Ocupada'),('preparando', 'Preparando')],
         default='disponible'
     )
 
@@ -110,6 +110,7 @@ class Usuarios(models.Model):
     
 #tabla para relacionar menú con inventario en relación onetomany 
 class IngredienteMenu(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     menu = models.ForeignKey('Menu', on_delete=models.CASCADE, related_name='ingredientes', to_field='id')  
     ingrediente = models.ForeignKey(Inventario, on_delete=models.CASCADE, related_name='menus', to_field='id')  
     cantidad_requerida = models.DecimalField(max_digits=10, decimal_places=2)  
