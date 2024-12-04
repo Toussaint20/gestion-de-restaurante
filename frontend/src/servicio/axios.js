@@ -1,34 +1,42 @@
-// src/api.js
-
 import axios from 'axios';
 
-const API_BASE_URL = 'http://127.0.0.1:8000/api/';
+// const BASE_URL = "https://pokeapi.co/api/v2/";
+const BASE_URL = "http://127.0.0.1:8000/api/";
 
-const instance = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: 1000,
-});
-
-// You can add common headers or auth tokens here
-// instance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-
-export const fetchData = async () => {
+export const get = async (url) => {
+    console.log("http://127.0.0.1:8000/api/" + url)
   try {
-    const response = await instance.get('mesas');
+    const response = await axios.get(BASE_URL + url);
+    // const response = await axios.get("http://127.0.0.1:8000/api/mesas/");
     return response.data;
   } catch (error) {
-    console.error('Error fetching data: ', error);
-    // Handle errors here or throw them to be handled where the function is called
-    throw error;
+    console.error(error);
   }
 };
 
-export const fetchAxios = async (url) => {
-    try {
-        const response = await axios.get(API_BASE_URL+url)
-        return response
-    } catch (error) {
-        console.log("ERR ", error);
-        throw error;
-    }
-}
+export const post = async (url, data) => {
+  try {
+    const response = await axios.post(BASE_URL + url, data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const put = async (url, data) => {
+  try {
+    const response = await axios.put(BASE_URL + url, data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const remove = async (url) => {
+  try {
+    const response = await axios.delete(BASE_URL + url);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

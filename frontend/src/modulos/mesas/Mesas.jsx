@@ -1,35 +1,87 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { fetchAxios, fetchData } from "../../servicio/axios";
+import React, { useEffect, useState } from "react";
+import { get, post, put } from "../../servicio/axios";
+import Card from "../../componentes/Card";
+import Modalcomp from "../../componentes/Modal";
+import Button from "react-bootstrap/esm/Button";
 
-const getData = async (url) => {
-  const response = await axios.get(url).catch((err) => {});
-  return response
-  
-};
+const mockMesas = [
+  {
+    id: 1,
+    nombre: "Mesa 1",
+    detalle: "Mesa para 4 personas",
+  },
+  {
+    id: 2,
+    nombre: "Mesa 2",
+    detalle: "Mesa para 6 personas",
+  },
+  {
+    id: 3,
+    nombre: "Mesa 3",
+    detalle: "Mesa para 2 personas",
+  },
+];
 
 const Mesas = () => {
-  const [data, setData] = useState({ details: null });
-  const [id, setId] = useState(0);
-  // const handleClick = async () => {
-  //   const response = fetchAxios('mesas')
-  //     console.log(response);
-  // };
+  const [data, setData] = useState(null);
+  const [show, setShow] = useState(false);
+  // const [selectedMesa, setSelectedMesa] = useState(null);
+  const [selectedMesa, setSelectedMesa] = useState({
+    id: null,
+    numero_mesa: 0,
+    capacidad: 0,
+    estado: "",
+  });
 
-  // axios
-  //   .get("http://localhost:8000/api/mesas/")
-  //   .then((res) => {
-  //     setData({
-  //       details: res.data,
-  //     });
-  //   })
-  //   .catch((err) => {});
+  const handleClose = () => setShow(false);
+  const handleShow = (mesa) => {
+    setSelectedMesa(mesa);
+    setShow(true);
+  };
 
-  console.log(data);
+  const handleMesas = async () => {
+    const response = await get("mesas/");
+    setData(response);
+  };
+
+  const desocuparMesa = async () => {
+    const response = await put(`mesas/${selectedMesa.id}/`, {
+      id: selectedMesa.id,
+      numero_mesa: selectedMesa.numero_mesa,
+      capacidad: selectedMesa.capacidad,
+      estado: "disponible",
+    });
+    if (response.estado === "disponible") {
+      handleMesas()
+      setSelectedMesa(({...selectedMesa, estado: "disponible"}))
+    } else {
+      console.log("error: ", response)
+    }
+  };
+
+  useEffect(() => {
+    if (data === null) {
+      handleMesas();
+    }
+  }, []);
+
   return (
     <>
-      <div>Mesas: {data[0]}</div>
-      <button onClick={() =>handleClick()}>Click mesas</button>
+      {/* <button onClick={() => handleClick()}>Click mesas</button> */}
+      <Modalcomp show={show} handleClose={handleClose} data={selectedMesa} toDo={desocuparMesa} />
+      {data &&
+        data.map((mesa) => (
+          <Card
+            id={mesa.numero_mesa}
+            nombre={mesa.capacidad}
+            detalle={mesa.estado}
+            button={
+              <Button variant="primary" onClick={() => handleShow(mesa)}>
+                Launch demo modal
+              </Button>
+            }
+          />
+        ))}
     </>
   );
 };
