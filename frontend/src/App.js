@@ -1,12 +1,13 @@
 import React from 'react';
-import Login from './Login'; // Asegúrate de que la ruta esté correcta
+import Login from './Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Home } from './Home';
 
 
 function App() {
   return (
     <div className="App">
-      <Login />
+      <Home />
     </div>
   );
 }
