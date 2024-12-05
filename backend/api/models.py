@@ -13,7 +13,9 @@ class Mesa(models.Model):
         choices=[('disponible', 'Disponible'), ('ocupada', 'Ocupada'),('preparando', 'Preparando')],
         default='disponible'
     )
+    pedidoencurso = models.CharField(max_length=36, null=True, blank=True)
 
+    
     def __str__(self):
         return f"Mesa {self.numero_mesa}"
 

@@ -9,9 +9,7 @@ export const Home = () => {
   return (
     <>
     <Mesas />
-    <Inventario />
-    <Pedidos />
-    <Menu />
+    {/* <Inventario />     */}
     </>
   )
 }
