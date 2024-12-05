@@ -2,16 +2,17 @@ from rest_framework import serializers
 from .models import Pedido, Mesa, Empleado, Inventario, DetallePedido, Usuarios, Menu, IngredienteMenu
 
 
-class PedidoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Pedido
-        fields = '__all__'  
-
 class MesaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mesa
-        fields = ['id', 'numero_mesa', 'capacidad', 'estado']
+        fields = '__all__'
+        
+class PedidoSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Pedido
+        fields = '__all__'  
+        
 class EmpleadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Empleado

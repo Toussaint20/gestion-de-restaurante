@@ -1,13 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
 
-// const BASE_URL = "https://pokeapi.co/api/v2/";
 const BASE_URL = "http://127.0.0.1:8000/api/";
 
 export const get = async (url) => {
-    console.log("http://127.0.0.1:8000/api/" + url)
   try {
     const response = await axios.get(BASE_URL + url);
-    // const response = await axios.get("http://127.0.0.1:8000/api/mesas/");
     return response.data;
   } catch (error) {
     console.error(error);
