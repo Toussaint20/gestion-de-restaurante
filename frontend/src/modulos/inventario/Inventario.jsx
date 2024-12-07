@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Form } from "react-bootstrap";
-
+import "./Inventario.css";
 const Inventario = () => {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
@@ -18,22 +18,18 @@ const Inventario = () => {
 
   const handleSave = () => {
     if (selectedItem.id) {
-      //logica para editar conectar con el backend
       console.log("Editando:", selectedItem);
     } else {
-      // Aquí va ka logica para crear 
       console.log("Creando:", selectedItem);
     }
     handleClose();
   };
 
   const handleDelete = (id) => {
-    // aqui logica para eliminar (backend)
     console.log("Eliminando:", id);
   };
 
   useEffect(() => {
-    // leche para simular
     setData([
       {
         id: 2,
@@ -48,46 +44,48 @@ const Inventario = () => {
 
   return (
     <>
-      <Button variant="primary" onClick={() => handleShow()}>
-        Agregar Producto
-      </Button>
-      <Table striped bordered hover className="mt-3">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Cantidad</th>
-            <th>Unidad</th>
-            <th>Precio</th>
-            <th>Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item) => (
-            <tr key={item.id}>
-              <td>{item.nombre_producto}</td>
-              <td>{item.descripcion}</td>
-              <td>{item.cantidad}</td>
-              <td>{item.unidad_medida}</td>
-              <td>{item.precio}</td>
-              <td>
-                <Button
-                  variant="warning"
-                  onClick={() => handleShow(item)}
-                  className="me-2"
-                >
-                  Editar
-                </Button>
-                <Button variant="danger" onClick={() => handleDelete(item.id)}>
-                  Eliminar
-                </Button>
-              </td>
+      <div className="container-inventario">
+        <Button variant="success" onClick={() => handleShow()} className="mb-3">
+          Agregar Producto
+        </Button>
+        <Table striped bordered hover responsive className="table-custom">
+          <thead className="table-header">
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Cantidad</th>
+              <th>Unidad</th>
+              <th>Precio</th>
+              <th>Opciones</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {data.map((item) => (
+              <tr key={item.id} className="table-row">
+                <td>{item.nombre_producto}</td>
+                <td>{item.descripcion}</td>
+                <td>{item.cantidad}</td>
+                <td>{item.unidad_medida}</td>
+                <td>${item.precio}</td>
+                <td>
+                  <Button
+                    variant="warning"
+                    onClick={() => handleShow(item)}
+                    className="me-2"
+                  >
+                    Editar
+                  </Button>
+                  <Button variant="danger" onClick={() => handleDelete(item.id)}>
+                    Eliminar
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} className="modal-custom">
         <Modal.Header closeButton>
           <Modal.Title>
             {selectedItem ? "Editar Producto" : "Agregar Producto"}
@@ -106,6 +104,7 @@ const Inventario = () => {
                     nombre_producto: e.target.value,
                   })
                 }
+                className="form-control-custom"
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -120,6 +119,7 @@ const Inventario = () => {
                     descripcion: e.target.value,
                   })
                 }
+                className="form-control-custom"
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -133,6 +133,7 @@ const Inventario = () => {
                     cantidad: e.target.value,
                   })
                 }
+                className="form-control-custom"
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -145,6 +146,7 @@ const Inventario = () => {
                     unidad_medida: e.target.value,
                   })
                 }
+                className="form-control-custom"
               >
                 <option value="">Seleccionar</option>
                 <option value="kg">Kilogramo</option>
@@ -165,6 +167,7 @@ const Inventario = () => {
                     precio: e.target.value,
                   })
                 }
+                className="form-control-custom"
               />
             </Form.Group>
           </Form>
