@@ -5,6 +5,7 @@ import Menu from "../modulos/menu/Menu";
 import Pedidos from "../modulos/pedidos/Pedidos";
 import { Card, Container, Stack } from "react-bootstrap";
 import { get } from "../servicio/axios";
+import "./Componentes.css";
 
 const Modalcomp = ({
   show,

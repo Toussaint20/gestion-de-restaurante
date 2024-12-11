@@ -6,14 +6,13 @@ import Inventario from './modulos/inventario/Inventario';
 import Pedidos from './modulos/pedidos/Pedidos';
 
 
-
 function App() {
   return (
     <div className="App">
-      <Inventario /> {/* Aqui lo puse solamente para poeder verlo */}
-
+      <Home />
     </div>
   );
 }
 
 export default App;
+

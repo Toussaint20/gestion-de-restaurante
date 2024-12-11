@@ -1,3 +1,5 @@
+import "./Componentes.css";
+
 const Card = ({ text, nombre, detalle, button }) => {
   return (
     <div class="card">

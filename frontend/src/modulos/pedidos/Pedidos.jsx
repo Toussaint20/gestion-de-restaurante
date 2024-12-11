@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, InputGroup, ListGroup, Table } from "react-bootstrap";
 import { post, put } from "../../servicio/axios";
+import "./Pedidos.css";
 
 const EMPLEADO = "97ea2b06-8682-4b0d-92f5-94153e7f258c";
 
@@ -86,39 +87,41 @@ const Pedidos = ({
   }, [listMenu]);
 
   return (
-    <>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Elemento</th>
-            <th>Precio u</th>
-            <th>Cantidad</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {listPedidos &&
-            listPedidos.map((pedido, i) => (
-              <tr key={i}>
-                <td>{pedido.nombre_plato}</td>
-                <td>{pedido.precio}</td>
-                <td>
-                  <InputGroup className="mb-3">
-                    <Form.Control
-                      aria-label="Cantidad"
-                      value={pedido.cantidad}
-                      onChange={(e) => handleCantidad(e.target.value, i)}
-                    />
-                  </InputGroup>
-                </td>
-                <td>{pedido.precio * pedido.cantidad}</td>
-                <td>
-                  <Button onClick={() => handleRemove(i)}>Quitar</Button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
+    <div className="lists-container">
+      <div className="list">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Elemento</th>
+              <th>Precio u</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {listPedidos &&
+              listPedidos.map((pedido, i) => (
+                <tr key={i}>
+                  <td>{pedido.nombre_plato}</td>
+                  <td>{pedido.precio}</td>
+                  <td>
+                    <InputGroup className="mb-3">
+                      <Form.Control
+                        aria-label="Cantidad"
+                        value={pedido.cantidad}
+                        onChange={(e) => handleCantidad(e.target.value, i)}
+                      />
+                    </InputGroup>
+                  </td>
+                  <td>{pedido.precio * pedido.cantidad}</td>
+                  <td>
+                    <Button onClick={() => handleRemove(i)}>Quitar</Button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
+      </div>
       <Button
         variant="primary"
         disabled={totalPedido === 0}
@@ -126,8 +129,9 @@ const Pedidos = ({
       >
         Realizar Pedido
       </Button>
-    </>
+    </div>
   );
+  
 };
 
 export default Pedidos;
