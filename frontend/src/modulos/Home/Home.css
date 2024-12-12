@@ -6,13 +6,11 @@
     justify-content: center;
     align-items: center;
   }
-  
   .home-title {
     font-size: 2.5rem;
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra */
   }
-  
   
   .home-card {
     background-color: #ffffff;
@@ -21,7 +19,6 @@
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  
   .home-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
@@ -29,7 +26,7 @@
   
   .home-card .card-title {
     font-size: 1.5rem;
-    color: #007bff;
+    color: #7a503f;
   }
   
   .home-card .card-body {
