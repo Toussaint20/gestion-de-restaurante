@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Container, Row, Col } from 'react-bootstrap';
-import './Home.css'; // Asegúrate de tener este archivo CSS
+import './Home.css'; 
 
 const Home = () => {
   return (

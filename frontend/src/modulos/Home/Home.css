@@ -1,5 +1,5 @@
 .home-container {
-    background: linear-gradient(to right, #b9795f, #cacaca); /* Gradiente entre dos colores */
+    background: linear-gradient(to right, #b9795f, #cacaca); /* gradiente entre dos colores */
     padding: 20px;
     height: 100vh;
     display: flex;
@@ -10,7 +10,7 @@
   .home-title {
     font-size: 2.5rem;
     color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra para mejorar la legibilidad */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra */
   }
   
   
