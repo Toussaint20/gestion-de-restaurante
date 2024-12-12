@@ -1,18 +1,23 @@
 import React from 'react';
-import Login from './Login';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Home } from './Home';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Inventario from './modulos/inventario/Inventario';
+import Menu from './modulos/menu/Menu';
+import Mesas from './modulos/mesas/Mesas';
 import Pedidos from './modulos/pedidos/Pedidos';
+import Home from './modulos/Home/Home';
 
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <Home />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/inventario" element={<Inventario />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/mesas" element={<Mesas />} />
+        <Route path="/pedidos" element={<Pedidos />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
-
