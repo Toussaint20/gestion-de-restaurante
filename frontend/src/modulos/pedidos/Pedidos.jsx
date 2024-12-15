@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, InputGroup, ListGroup, Table } from "react-bootstrap";
+import { Link } from "react-router-dom"; // Importa Link
 import { post, put } from "../../servicio/axios";
 import "./Pedidos.css";
 
@@ -16,6 +17,7 @@ const Pedidos = ({
 }) => {
   const [listPedidos, setListPedidos] = useState([]);
   const [totalPedido, setTotalPedido] = useState(0);
+
   const handleRemove = (index) => {
     setListMenu(listMenu.filter((list) => list !== listMenu[index]));
   };
@@ -87,8 +89,11 @@ const Pedidos = ({
   }, [listMenu]);
 
   return (
-    <div className="lists-container">
-      <div className="list">
+    <div className="lists-container" >
+      <Link to="/" className="btn btn-secondary mb-3">
+        Volver
+      </Link>
+      <div className="list" >
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -131,7 +136,8 @@ const Pedidos = ({
       </Button>
     </div>
   );
-  
 };
 
 export default Pedidos;
+
+
