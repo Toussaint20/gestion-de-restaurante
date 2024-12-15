@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./Inventario.css";
+
 const Inventario = () => {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
@@ -45,6 +47,11 @@ const Inventario = () => {
   return (
     <>
       <div className="container-inventario">
+        <div className="d-flex justify-content-between align-items-center mb-3">
+        <Link to="/" className="link-button mb-3">
+          Volver
+        </Link>
+        </div>
         <Button variant="success" onClick={() => handleShow()} className="mb-3">
           Agregar Producto
         </Button>
@@ -186,3 +193,4 @@ const Inventario = () => {
 };
 
 export default Inventario;
+
