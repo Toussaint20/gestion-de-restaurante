@@ -30,7 +30,7 @@ class Empleado(models.Model):
     ]
     nombre = models.CharField(max_length=100)
     cargo = models.CharField(max_length=50, choices=CARGOS)
-    telefono = models.CharField(max_length=20, blank=True, null=True)
+    telefono = models.CharField(max_length=12, blank=True, null=True)
     correo = models.EmailField(blank=True, null=True)
 
     def __str__(self):
@@ -108,7 +108,9 @@ class Usuarios(models.Model):
     nombre_usuario = models.CharField(max_length=50, unique=True)
     contrasena = models.CharField(max_length=255)
     tipo_usuario = models.CharField(max_length=50, choices=TIPO_USUARIO)
-
+    telefono = models.CharField(max_length=12, blank=True, null=True)
+    correo = models.EmailField(blank=True, null=True)
+    
     def __str__(self):
         return self.nombre_usuario
     
