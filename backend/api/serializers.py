@@ -5,9 +5,15 @@ from .models import Pedido, Mesa, Empleado, Inventario, DetallePedido, Usuarios,
 class MesaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mesa
-        fields = '__all__'
+        fields = '__all__'       
+
+class DetallePedidoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DetallePedido
+        fields = '__all__'     
         
 class PedidoSerializer(serializers.ModelSerializer):
+    detalles_pedido = DetallePedidoSerializer(many=True, read_only=True, source='detallepedido_set')
 
     class Meta:
         model = Pedido
@@ -21,11 +27,6 @@ class EmpleadoSerializer(serializers.ModelSerializer):
 class InventarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Inventario
-        fields = '__all__'
-
-class DetallePedidoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DetallePedido
         fields = '__all__'
 
 class UsuarioSerializer(serializers.ModelSerializer):

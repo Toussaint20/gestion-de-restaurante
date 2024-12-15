@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import PedidoViewSet, MesaViewSet, EmpleadoViewSet, InventarioViewSet, DetallePedidoViewSet, UsuariosViewSet, MenuViewSet, IngredienteMenuViewSet, MyTokenObtainPairView, MyTokenRefreshView, ActualizarEstadoMesaView
+from .views import PedidoViewSet, PedidoEnCursoView, MesaViewSet, EmpleadoViewSet, InventarioViewSet, DetallePedidoViewSet, UsuariosViewSet, MenuViewSet, IngredienteMenuViewSet, MyTokenObtainPairView, MyTokenRefreshView, ActualizarEstadoMesaView
 
 #routers
 router = DefaultRouter()
@@ -19,6 +19,7 @@ urlpatterns = [
     path('api/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', MyTokenRefreshView.as_view(), name='token_refresh'),
     path('mesas/<int:mesa_id>/actualizar-estado/', ActualizarEstadoMesaView.as_view(), name='actualizar_estado_mesa'), #ruta de actualización manual de estado de mesa
+    path('mesas/<int:mesa_id>/pedido-en-curso/', PedidoEnCursoView.as_view(), name='pedido-en-curso'),
 
 ]
 

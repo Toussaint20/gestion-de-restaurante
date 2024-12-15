@@ -12,7 +12,7 @@ class MesaViewSet(viewsets.ModelViewSet):
     serializer_class = MesaSerializer
 
 class PedidoViewSet(viewsets.ModelViewSet):
-    queryset = Pedido.objects.all()
+    queryset = Pedido.objects.prefetch_related('detallepedido_set').all()
     serializer_class = PedidoSerializer
 
 class EmpleadoViewSet(viewsets.ModelViewSet):
@@ -61,3 +61,18 @@ class ActualizarEstadoMesaView(APIView):
         except Mesa.DoesNotExist:
             return Response({'error': 'Mesa no encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
+#Visualizar pedido en curso de la mesa
+class PedidoEnCursoView(APIView):
+    def get(self, request, mesa_id):
+        try:
+            # Busca un pedido con estado 'pendiente' o 'en_proceso' para la mesa
+            pedido_en_curso = Pedido.objects.filter(mesa=mesa_id, estado__in=['pendiente', 'en_proceso']).first()
+            
+            if not pedido_en_curso:
+                return Response({"detail": "La mesa no tiene un pedido en curso."}, status=404)
+            
+            # Serializa el pedido
+            serializer = PedidoSerializer(pedido_en_curso)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)

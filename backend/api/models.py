@@ -51,8 +51,10 @@ class Pedido(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     ESTADOS = [
         ('pendiente', 'Pendiente'),
-        ('preparando', 'Preparando'),
-        ('servido', 'Servido'),
+        ('en_proceso', 'En Proceso'),
+        ('finalizado', 'Finalizado'),
+        ('cancelado', 'Cancelado'),
+
     ]
     mesa = models.ForeignKey(Mesa, on_delete=models.CASCADE)
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
@@ -134,20 +136,3 @@ def actualizar_estado_mesa(sender, instance, **kwargs):
         mesa.estado = 'ocupada'
         mesa.save()
 
-# @receiver(pre_delete, sender=Pedido)
-# def liberar_mesa(sender, instance, **kwargs):
-#     mesa = instance.mesa
-#     if not Pedido.objects.filter(mesa=mesa, estado='pendiente').exists():
-#         mesa.estado = 'disponible'
-#         mesa.save()
-
-# @receiver(post_save, sender=DetallePedido)
-# def descontar_inventario(sender, instance, **kwargs):
-#     ingredientes = Inventario.objects.filter(nombre_producto=instance.menu.nombre_plato)
-#     if ingredientes.exists():
-#         ingrediente = ingredientes.first()
-#         if ingrediente.cantidad >= instance.cantidad:
-#             ingrediente.cantidad -= instance.cantidad
-#             ingrediente.save()
-#         else:
-#             raise ValueError("Stock insuficiente para el pedido.")
