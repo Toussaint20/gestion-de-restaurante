@@ -1,3 +1,3 @@
 # gestion-de-restaurante
-sistema de gestión de restaurantes con fines de aprendizaje academico. proyecto incompleto
-
+proyecto incompleto
+sistema de gestión de restaurantes con fines de aprendizaje academico. 
